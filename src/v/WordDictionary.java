@@ -15,78 +15,93 @@ public class WordDictionary {
 	private static List<String> negativeList = new ArrayList<String>();
 	private static List<String> neutralList = new ArrayList<String>();
 	private static List<String> compoundList = new ArrayList<String>();
+	private static List<String> domainWordList = new ArrayList<String>();
 
-	static{
+	static {
 		setPositiveList();
 		setNegativeList();
 		setNeutralList();
 		setCompoundList();
+		setDomainWordList();
 	}
-	
+
 	public static List<String> getPositiveList() {
 		return positiveList;
 	}
+
 	public static void setPositiveList() {
-		String  thisLine = null;
+		String thisLine = null;
 		try {
 			File file = new File("./src/positive-words.txt");
 			FileReader reader = new FileReader(file);
 			BufferedReader br = new BufferedReader(reader);
-	         while ((thisLine = br.readLine()) != null) {
-	            positiveList.add(thisLine.toUpperCase());
-	         }  
+			while ((thisLine = br.readLine()) != null && !thisLine.isEmpty()) {
+				if (!positiveList.contains(thisLine.toUpperCase())) {
+					positiveList.add(thisLine.toUpperCase().trim());
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	public static List<String> getNegativeList() {
 		return negativeList;
 	}
+
 	public static void setNegativeList() {
-		String  thisLine = null;
+		String thisLine = null;
 		try {
 			File file = new File("./src/negative-words.txt");
 			FileReader reader = new FileReader(file);
 			BufferedReader br = new BufferedReader(reader);
-	         while ((thisLine = br.readLine()) != null) {
-	        	 negativeList.add(thisLine.toUpperCase());
-	         }  
+			while ((thisLine = br.readLine()) != null && !thisLine.isEmpty()) {
+				if (!negativeList.contains(thisLine.toUpperCase())) {
+					negativeList.add(thisLine.toUpperCase().trim());
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	public static List<String> getNeutralList() {
 		return neutralList;
 	}
+
+	public static List<String> getDomainWordList() {
+		return domainWordList;
+	}
+
 	public static void setNeutralList() {
 		neutralList.add("OK");
 		neutralList.add("SATISFACTORY");
 		neutralList.add("SO SO");
 	}
+
 	public static List<String> getCompoundList() {
 		return compoundList;
 	}
+
 	public static void setCompoundList() {
 		compoundList.add("BUT");
 		compoundList.add("HOWEVER");
 	}
-	
-	private static List<String> readInputFile(){
-		String  thisLine = null;
-		List<String> inputList = new LinkedList<String>();
+
+	private static void setDomainWordList() {
+		String thisLine = null;
 		try {
-			File file = new File("./src/positive-words.txt");
+			File file = new File("./src/DomainSpecificWords.txt");
 			FileReader reader = new FileReader(file);
-			 BufferedReader br = new BufferedReader(reader);
-	         while ((thisLine = br.readLine()) != null) {
-	            System.out.println(thisLine);
-	            inputList.add(thisLine);
-	         }  
+			BufferedReader br = new BufferedReader(reader);
+			while ((thisLine = br.readLine()) != null && !thisLine.isEmpty()) {
+				if (!domainWordList.contains(thisLine.toUpperCase())) {
+					domainWordList.add(thisLine.toUpperCase().trim());
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return inputList;
-		
 	}
-	
+
 }
